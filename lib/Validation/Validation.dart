@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 
 class Validation {
-  static bool validatePhoneNumber(String phone) {
+  static bool validatePhoneNumber({String? phone}) {
     if (phone == null || phone.isEmpty) {
       return false;
     } else {
@@ -10,7 +10,7 @@ class Validation {
     }
   }
 
-  static bool validateEmail(String? email) {
+  static bool validateEmail({String? email}) {
     if (email == null || email.isEmpty) {
       return false;
     } else {
@@ -178,4 +178,92 @@ class Validation {
       return "$seconds second's ago";
     }
   }
+
+  String numberConvertStr(String number, String unit1, String unit2) {
+    double num = double.parse(number);
+    double multiplier = getMultiplier(unit1) / getMultiplier(unit2);
+    double result = num * multiplier;
+    return result.round().toString();
+  }
+
+  double numberConvert(String number, String unit1, String unit2) {
+    double num = double.parse(number);
+    double multiplier = getMultiplier(unit1) / getMultiplier(unit2);
+    return num * multiplier;
+  }
+
+  double getMultiplier(String unit) {
+    switch (unit) {
+      case "billion":
+        return 1e9;
+      case "crore":
+        return 1e7;
+      case "dozen":
+        return 12;
+      case "hundred":
+        return 100;
+      case "lakh":
+        return 1e5;
+      case "million":
+        return 1e6;
+      case "thousand":
+        return 1e3;
+      case "trillion":
+        return 1e12;
+      default:
+        return 1;
+    }
+  }
+
+  int getIndexFromUnit(String unit) {
+    switch (unit) {
+      case "Tonne":
+        return 0;
+      case "Kilogram":
+        return 1;
+      case "Gram":
+        return 2;
+      case "Milligram":
+        return 3;
+      case "Microgram":
+        return 4;
+      case "Imperial Ton":
+        return 5;
+      case "US Ton":
+        return 6;
+      case "Stone":
+        return 7;
+      case "Pound":
+        return 8;
+      case "Ounce":
+        return 9;
+      default:
+        return -1;
+    }
+  }
+
+  String getRandomPasswordCharacters(int pos) {
+    String numbers = "0123456789";
+    String upperAlphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    String lowerAlphabets = "abcdefghijklmnopqrstuvwxyz";
+    String specialCharacters = "@#\$%&*";
+    Random randomNum = Random();
+    StringBuffer randomChar = StringBuffer();
+    switch (pos) {
+      case 0:
+        randomChar.write(numbers[randomNum.nextInt(numbers.length - 1)]);
+        break;
+      case 1:
+        randomChar.write(upperAlphabets[randomNum.nextInt(upperAlphabets.length - 1)]);
+        break;
+      case 2:
+        randomChar.write(specialCharacters[randomNum.nextInt(specialCharacters.length - 1)]);
+        break;
+      case 3:
+        randomChar.write(lowerAlphabets[randomNum.nextInt(lowerAlphabets.length - 1)]);
+        break;
+    }
+    return randomChar.toString();
+  }
+
 }

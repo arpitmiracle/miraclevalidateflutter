@@ -1,66 +1,77 @@
 class MiracleFormValidation {
 
-  Map<String, String> validateForm(
-      String userID,
-      String firstName,
-      String lastName,
-      String phone,
-      String email,
-      String pass1,
-      String pass2,
-      String zip,
-      ) {
-    Map<String, String> errors = {};
+  static Map<String, dynamic> validateForm({
+    String userID = "",
+    String firstName = "",
+    String lastName = "",
+    String phone = "",
+    String email = "",
+    String pass1 = "",
+    String pass2 = "",
+    String zip = "",
+  }) {
+    Map<String, dynamic> errors = {};
 
     if (!RegExp(r'^[a-zA-Z0-9]*$').hasMatch(userID)) {
-      errors["user_id"] = "Invalid User ID";
+      errors[ErrorMessageType.userId] = "Invalid User ID";
     } else {
-      errors["user_id"] = "";
+      errors[ErrorMessageType.userId] = null;
     }
 
     if (!RegExp(r'^[a-zA-Z]*$').hasMatch(firstName)) {
-      errors["first_name"] = "Invalid First Name";
+      errors[ErrorMessageType.firstName] = "Invalid First Name";
     } else {
-      errors["first_name"] = "";
+      errors[ErrorMessageType.firstName] = null;
     }
 
     if (!RegExp(r'^[a-zA-Z]*$').hasMatch(lastName)) {
-      errors["last_name"] = "Invalid Last Name";
+      errors[ErrorMessageType.lastName] = "Invalid Last Name";
     } else {
-      errors["last_name"] = "";
+      errors[ErrorMessageType.lastName] = null;
     }
 
     if (!RegExp(r'^[0-9]*$').hasMatch(phone)) {
-      errors["phone"] = "Invalid Phone Number";
+      errors[ErrorMessageType.phone] = "Invalid Phone Number";
     } else {
-      errors["phone"] = "";
+      errors[ErrorMessageType.phone] = null;
     }
 
     if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
-      errors["email"] = "Invalid Email ID";
+      errors[ErrorMessageType.email] = "Invalid Email ID";
     } else {
-      errors["email"] = "";
+      errors[ErrorMessageType.email] = null;
     }
 
     if (pass1.length < 6) {
-      errors["pass1"] = "Password must be at least 6 characters";
+      errors[ErrorMessageType.pass1] = "Password must be at least 6 characters";
     } else {
-      errors["pass1"] = "";
+      errors[ErrorMessageType.pass1] = null;
     }
 
     if (pass1 != pass2) {
-      errors["pass2"] = "Passwords do not match";
+      errors[ErrorMessageType.pass2] = "Passwords do not match";
     } else {
-      errors["pass2"] = "";
+      errors[ErrorMessageType.pass2] = null;
     }
 
     if (!RegExp(r'^[0-9]*$').hasMatch(zip)) {
-      errors["zip"] = "Invalid ZIP Code";
+      errors[ErrorMessageType.zip] = "Invalid ZIP Code";
     } else {
-      errors["zip"] = "";
+      errors[ErrorMessageType.zip] = null;
     }
 
     return errors;
   }
 
+}
+
+class ErrorMessageType {
+  static const String email = "email";
+  static const String userId = "userId";
+  static const String firstName = "firstName";
+  static const String lastName = "lastName";
+  static const String phone = "phone";
+  static const String pass1 = "pass1";
+  static const String pass2 = "pass2";
+  static const String zip = "zip";
 }
